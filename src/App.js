@@ -1,10 +1,12 @@
 import Nav from './Components/Nav';
-import Modal from './Components/Modal';
 import './App.css';
+import GlobalContext from './GlobalContext/GlobalContext';
 
 function App() {
   return (
-    <Nav />
+    <GlobalContext>
+      <Nav />
+    </GlobalContext>
   );
 }
 

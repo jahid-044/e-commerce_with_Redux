@@ -1,8 +1,11 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { Disclosure } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import logo from '../Assets/logo.jpg'
 import Cards from './Cards'
+import Modal from './Modal'
+import { useState } from 'react/cjs/react.development'
+import { modalContext } from '../GlobalContext/GlobalContext'
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
@@ -15,6 +18,8 @@ function classNames(...classes) {
 }
 
 export default function Nav() {
+  const { modalCall, setModalCall } = useContext(modalContext);
+
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
@@ -67,7 +72,7 @@ export default function Nav() {
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                   <li className="font-sans block mt-4 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-red-200 hover:text-gray-300">
-                    <a href="#" role="button" className="relative flex">
+                    <a role="button" onClick={() => setModalCall(!modalCall)} className="relative flex">
                       <svg className="flex-1 w-8 h-8 fill-current" viewBox="0 0 24 24">
                         <path d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" />
                       </svg>
@@ -79,6 +84,8 @@ export default function Nav() {
                 </div>
               </div>
             </div>
+
+            <Modal />
 
             <Disclosure.Panel className="sm:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1">

@@ -1,13 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { modalContext } from '../GlobalContext/GlobalContext'
 export default function Cards() {
     const [productList, setProductList] = useState([]);
+    const { qty, setQty } = useContext(modalContext);
 
     useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then(data => data.json())
-            .then(data => {
-                setProductList(data);
-            })
+
+        if (productList.length === 0 && !localStorage.getItem("productList")) {
+            console.log("I am going to fetch...");
+            fetch('https://fakestoreapi.com/products')
+                .then(data => data.json())
+                .then(data => {
+                    localStorage.setItem("productList", JSON.stringify(data));
+                    setProductList(data);
+                })
+        }
+        else {
+            setProductList(JSON.parse(localStorage.getItem("productList")));
+        }
     }, []);
 
     return (
@@ -31,7 +41,7 @@ export default function Cards() {
                                     <p>{item.rating.rate}</p>
                                 </div>
 
-                                <button className="w-full py-2 mt-4 bg-green-700 text-white rounded shadow focus:ring-2">
+                                <button onClick={() => setQty(1)} className="w-full py-2 mt-4 bg-green-700 text-white rounded shadow focus:ring-2">
                                     Add to Cart
                                 </button>
                             </div>
