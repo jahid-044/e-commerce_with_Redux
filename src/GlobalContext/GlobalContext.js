@@ -4,9 +4,11 @@ export const modalContext = createContext([]);
 
 function GlobalContext(props) {
     const [modalCall, setModalCall] = useState(false);
-    const [qty, setQty] = useState(0);
+    const [totalQuantity, setTotalQuantity] = useState(0);
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [cart, setCart] = useState([]);
     return (
-        <modalContext.Provider value={{ modalCall, setModalCall, qty, setQty }}>
+        <modalContext.Provider value={{ modalCall, setModalCall, cart, setCart, totalAmount, setTotalAmount, totalQuantity, setTotalQuantity }}>
             {props.children}
         </modalContext.Provider>
     )
