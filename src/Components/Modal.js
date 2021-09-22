@@ -3,6 +3,13 @@ import { Fragment, useState, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { modalContext } from '../GlobalContext/GlobalContext'
+import Checkout from './Checkout';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 
 
@@ -16,6 +23,8 @@ export default function Modal() {
         const newCart = cart.filter(itemKey => itemKey.item.id !== id)
         setCart(newCart)
     }
+
+
     return (
         <Transition.Root show={modalCall} as={Fragment}>
             <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setModalCall}>
@@ -81,8 +90,8 @@ export default function Modal() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex-1 flex items-end justify-between text-sm">
-                                                                    <p className="text-gray-500">Qty {product.quantity}</p>
-
+                                                                    {/* <p className="text-gray-500">Qty {product.quantity}</p> */}
+                                                                    <input className="" type="number" name="quantity" value={product.quantity} />
                                                                     <div className="flex">
                                                                         <button onClick={() => removeItem(product.item, product.quantity)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                                                             Remove
@@ -104,13 +113,18 @@ export default function Modal() {
                                         </div>
                                         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                         <div className="mt-6">
-                                            <a
-                                                href="#"
-                                                className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                                            >
-                                                Checkout
-                                            </a>
+
+                                            <Link to="/checkout">
+                                                <a onClick={() => setModalCall(false)} className="flex justify-center items-center px-6 py-3 border border-transparent 
+                                                    rounded-md shadow-sm text-base font-medium text-white bg-indigo-600
+                                                     hover:bg-indigo-700">
+                                                    Checkout
+                                                </a>
+                                            </Link>
+
+
                                         </div>
+
                                         <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
                                             <p>
                                                 or{' '}
@@ -124,6 +138,7 @@ export default function Modal() {
                                             </p>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </Transition.Child>

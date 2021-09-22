@@ -62,15 +62,15 @@ export default function Cards() {
         }
     }
     return (
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-4 sm:mt-8 gap-x-6 gap-y-8">
+        <div className=" max-w-sm sm:max-w-2xl lg:max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 sm:mt-8 gap-x-6 gap-y-8 lg:grid-cols-4 mt-4">
                 {
                     productList.map((item, key) => {
                         return (
-                            <div className="bg-white rounded shadow-lg p-4" key={key}>
+                            <div className="bg-white flex flex-col rounded shadow-lg p-4" key={key}>
 
-                                <div className="min-h-48">
-                                    <img src={item.image} alt="Just a flower" className=" w-full   object-fill  rounded-2xl" />
+                                <div className="h-80">
+                                    <img src={item.image} className="h-full w-full object-fill rounded-2xl" />
                                 </div>
 
                                 <div className="font-bold mt-4">
@@ -83,18 +83,18 @@ export default function Cards() {
                                 </div>
                                 {
                                     find(item) ? (
-                                        <div className="w-full flex justify-center py-2 mt-4 bg-gray-200 text-white rounded shadow focus:ring-2">
-                                            <button id="btn" onClick={() => decreaseQty(item)} className=" w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
+                                        <div className="w-full flex justify-center py-2 mt-auto bg-gray-200 text-white rounded shadow focus:ring-2">
+                                            <button id="btn" onClick={() => decreaseQty(item)} className="w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
                                                 -
                                             </button>
                                             <p className=" text-black">{itemQuantity(item)}</p>
-                                            <button id="btn" onClick={() => increaseQty(item)} className=" w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
+                                            <button id="btn" onClick={() => increaseQty(item)} className="w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
                                                 +
                                             </button>
                                         </div>
 
                                     ) : (
-                                        <button id="btn" onClick={() => addItems(item)} className="w-full py-2 mt-4 bg-green-700 text-white rounded shadow focus:ring-2">
+                                        <button id="btn" onClick={() => addItems(item)} className="mt-auto w-full py-2 bg-green-700 text-white rounded shadow focus:ring-2">
                                             Add to Cart
                                         </button>
                                     )
