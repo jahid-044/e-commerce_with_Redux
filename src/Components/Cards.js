@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { modalContext } from '../GlobalContext/GlobalContext'
+import '../'
 export default function Cards() {
     const [productList, setProductList] = useState([]);
 
-    const { cart, setCart, totalQuantity, setTotalQuantity, totalAmount, setTotalAmount } = useContext(modalContext);
+    const { cart, setCart } = useContext(modalContext);
 
     useEffect(() => {
 
@@ -23,15 +24,17 @@ export default function Cards() {
 
     const addItems = (item) => {
         setCart([...cart, { item, quantity: 1 }]);
-        setTotalQuantity(totalQuantity + 1);
-        setTotalAmount(totalAmount + item.price)
     }
 
     function increaseQty({ id, price }) {
-        cart.map(itemKey => itemKey.item.id === id ? itemKey.quantity += 1 : itemKey);
-        setCart(cart)
-        setTotalQuantity(totalQuantity + 1);
-        setTotalAmount(totalAmount + price)
+        let cartItems = [];
+        for (const itemKey of cart) {
+            if (itemKey.item.id === id) {
+                itemKey.quantity += 1;
+            }
+            cartItems.push(itemKey);
+        }
+        setCart(cartItems)
     }
 
     function decreaseQty({ id, price }) {
@@ -46,8 +49,6 @@ export default function Cards() {
 
         }
         setCart(cartItems)
-        setTotalQuantity(totalQuantity - 1);
-        setTotalAmount(totalAmount - price)
     }
 
     function find({ id }) {
@@ -61,6 +62,8 @@ export default function Cards() {
             }
         }
     }
+
+
     return (
         <div className=" max-w-sm sm:max-w-2xl lg:max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 sm:mt-8 gap-x-6 gap-y-8 lg:grid-cols-4 mt-4">
@@ -77,9 +80,9 @@ export default function Cards() {
                                     {item.title}
                                 </div>
 
-                                <div className="flex justify-between mt-4">
+                                <div className="flex justify-between my-4">
                                     <p>${item.price}</p>
-                                    <p>{item.rating.rate}</p>
+                                    <p><i className="fa fa-star" />{item.rating.rate}</p>
                                 </div>
                                 {
                                     find(item) ? (

@@ -24,6 +24,25 @@ export default function Modal() {
         setCart(newCart)
     }
 
+    function changeHandler(e, { id, price }) {
+        const value = e.target.value;
+        let cartItems = [];
+        for (const itemKey of cart) {
+            if (itemKey.item.id === id) {
+                itemKey.quantity = parseInt(value);
+            }
+            cartItems.push(itemKey);
+        }
+        setCart(cartItems)
+    }
+
+    function getTotalAmount() {
+        let total = 0.0;
+        for (const itemKey of cart) {
+            total += (itemKey.item.price * itemKey.quantity);
+        }
+        return total;
+    }
 
     return (
         <Transition.Root show={modalCall} as={Fragment}>
@@ -86,12 +105,12 @@ export default function Modal() {
                                                                         <h3>
                                                                             <a href='#'>{product.item.title}</a>
                                                                         </h3>
-                                                                        <p className="ml-4">${product.item.price}</p>
+                                                                        <p className="ml-4">${(product.item.price * product.quantity).toFixed(2)}</p>
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex-1 flex items-end justify-between text-sm">
                                                                     {/* <p className="text-gray-500">Qty {product.quantity}</p> */}
-                                                                    <input className="" type="number" name="quantity" value={product.quantity} />
+                                                                    <input className=" text-center ring-2 ring-black rounded w-12 h-6" type="number" name="quantity" value={product.quantity} min="1" onChange={(event) => changeHandler(event, product.item)} />
                                                                     <div className="flex">
                                                                         <button onClick={() => removeItem(product.item, product.quantity)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                                                             Remove
@@ -109,7 +128,7 @@ export default function Modal() {
                                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                             <p>Subtotal</p>
-                                            <p>${totalAmount.toFixed(2)}</p>
+                                            <p>${getTotalAmount().toFixed(2)}</p>
                                         </div>
                                         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                         <div className="mt-6">
@@ -128,13 +147,15 @@ export default function Modal() {
                                         <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
                                             <p>
                                                 or{' '}
-                                                <button
-                                                    type="button"
-                                                    className="text-indigo-600 font-medium hover:text-indigo-500"
-                                                    onClick={() => setModalCall(false)}
-                                                >
-                                                    Continue Shopping<span aria-hidden="true"> &rarr;</span>
-                                                </button>
+                                                <Link to="/">
+                                                    <button
+                                                        type="button"
+                                                        className="text-indigo-600 font-medium hover:text-indigo-500"
+                                                        onClick={() => setModalCall(false)}
+                                                    >
+                                                        Continue Shopping<span aria-hidden="true"> &rarr;</span>
+                                                    </button>
+                                                </Link>
                                             </p>
                                         </div>
                                     </div>
