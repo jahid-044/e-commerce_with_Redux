@@ -1,30 +1,21 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState, useContext } from 'react'
+import { Fragment, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
-import { modalContext } from '../GlobalContext/GlobalContext'
-import Checkout from './Checkout';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { globalContext } from '../GlobalContext/GlobalContext'
+import { Link } from "react-router-dom";
 
 
 
 export default function Modal() {
 
-    const { modalCall, setModalCall, cart, setCart, totalAmount, setTotalAmount, totalQuantity, setTotalQuantity } = useContext(modalContext);
+    const { modalCall, setModalCall, cart, setCart } = useContext(globalContext);
 
-    function removeItem({ id, price }, quantity) {
-        setTotalAmount(totalAmount - (quantity * price))
-        setTotalQuantity(totalQuantity - quantity)
+    function removeItem( id ) {
         const newCart = cart.filter(itemKey => itemKey.item.id !== id)
         setCart(newCart)
     }
 
-    function changeHandler(e, { id, price }) {
+    function changeHandler( e, id ) {
         const value = e.target.value;
         let cartItems = [];
         for (const itemKey of cart) {
@@ -94,7 +85,7 @@ export default function Modal() {
                                                         <li key={product.item.id} className="py-6 flex">
                                                             <div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                                                                 <img
-                                                                    src={product.item.image}
+                                                                    src={product.item.image} alt="Cart Item Image"
                                                                     className="w-full h-full object-center object-cover"
                                                                 />
                                                             </div>
@@ -109,10 +100,9 @@ export default function Modal() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex-1 flex items-end justify-between text-sm">
-                                                                    {/* <p className="text-gray-500">Qty {product.quantity}</p> */}
-                                                                    <input className=" text-center ring-2 ring-black rounded w-12 h-6" type="number" name="quantity" value={product.quantity} min="1" onChange={(event) => changeHandler(event, product.item)} />
+                                                                    <input className=" text-center ring-2 ring-black rounded w-12 h-6" type="number" name="quantity" value={product.quantity} min="1" onChange={(event) => changeHandler(event, product.item.id)} />
                                                                     <div className="flex">
-                                                                        <button onClick={() => removeItem(product.item, product.quantity)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                                                        <button onClick={() => removeItem(product.item.id)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                                                             Remove
                                                                         </button>
                                                                     </div>

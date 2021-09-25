@@ -1,15 +1,13 @@
 import { useEffect, useState, useContext } from "react";
-import { modalContext } from '../GlobalContext/GlobalContext'
-import '../'
+import { globalContext } from '../GlobalContext/GlobalContext'
+
 export default function Cards() {
     const [productList, setProductList] = useState([]);
-
-    const { cart, setCart } = useContext(modalContext);
+    const { cart, setCart } = useContext(globalContext);
 
     useEffect(() => {
 
         if (productList.length === 0 && !localStorage.getItem("productList")) {
-            console.log("I am going to fetch...");
             fetch('https://fakestoreapi.com/products')
                 .then(data => data.json())
                 .then(data => {
@@ -26,7 +24,7 @@ export default function Cards() {
         setCart([...cart, { item, quantity: 1 }]);
     }
 
-    function increaseQty({ id, price }) {
+    function increaseQty(id) {
         let cartItems = [];
         for (const itemKey of cart) {
             if (itemKey.item.id === id) {
@@ -37,7 +35,7 @@ export default function Cards() {
         setCart(cartItems)
     }
 
-    function decreaseQty({ id, price }) {
+    function decreaseQty(id) {
         let cartItems = [];
         for (const itemKey of cart) {
             if (itemKey.item.id === id) {
@@ -51,11 +49,11 @@ export default function Cards() {
         setCart(cartItems)
     }
 
-    function find({ id }) {
+    function find(id) {
         return cart.find(({ item }) => item.id === id)
     }
 
-    function itemQuantity({ id }) {
+    function itemQuantity(id) {
         for (const itemKey of cart) {
             if (itemKey.item.id === id) {
                 return itemKey.quantity;
@@ -66,14 +64,14 @@ export default function Cards() {
 
     return (
         <div className=" max-w-sm sm:max-w-2xl lg:max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 sm:mt-8 gap-x-6 gap-y-8 lg:grid-cols-4 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 sm:mt-4 gap-x-6 gap-y-8 lg:grid-cols-4">
                 {
                     productList.map((item, key) => {
                         return (
                             <div className="bg-white flex flex-col rounded shadow-lg p-4" key={key}>
 
-                                <div className="h-80">
-                                    <img src={item.image} className="h-full w-full object-fill rounded-2xl" />
+                                <div className="h-72">
+                                    <img src={item.image} alt="Product Item Image" className="h-full w-full object-fill rounded-2xl" />
                                 </div>
 
                                 <div className="font-bold mt-4">
@@ -85,13 +83,13 @@ export default function Cards() {
                                     <p><i className="fa fa-star" />{item.rating.rate}</p>
                                 </div>
                                 {
-                                    find(item) ? (
+                                    find(item.id) ? (
                                         <div className="w-full flex justify-center py-2 mt-auto bg-gray-200 text-white rounded shadow focus:ring-2">
-                                            <button id="btn" onClick={() => decreaseQty(item)} className="w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
+                                            <button id="btn" onClick={() => decreaseQty(item.id)} className="w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
                                                 -
                                             </button>
-                                            <p className=" text-black">{itemQuantity(item)}</p>
-                                            <button id="btn" onClick={() => increaseQty(item)} className="w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
+                                            <p className=" text-black">{itemQuantity(item.id)}</p>
+                                            <button id="btn" onClick={() => increaseQty(item.id)} className="w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
                                                 +
                                             </button>
                                         </div>

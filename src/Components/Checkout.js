@@ -1,19 +1,20 @@
 import { useContext } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import { modalContext } from "../GlobalContext/GlobalContext";
+import { globalContext } from "../GlobalContext/GlobalContext";
 
 
 function Checkout() {
-    const { cart, setCart } = useContext(modalContext);
+    const { cart, setCart } = useContext(globalContext);
     let history = useHistory();
 
-    function removeItem({ id, price }, quantity) {
+    function removeItem( id ) {
         const newCart = cart.filter(itemKey => itemKey.item.id !== id)
         setCart(newCart)
     }
 
     function submitForm(event) {
         event.preventDefault();
+        setCart([]);
         history.push("/confirmation")
     }
 
@@ -107,14 +108,17 @@ function Checkout() {
 
                                                 <div className="grid grid-cols-7 space-x-2">
                                                     <div className="col-span-2">
-                                                        <img src={cartItem.item.image} alt="image"
+                                                        <img src={cartItem.item.image} alt="Cart Item Image"
                                                             className="h-32 object-fill" />
                                                     </div>
                                                     <div className="col-span-4">
                                                         <h2 className="text-xl font-bold">{cartItem.item.title}</h2>
-                                                        <span className="text-red-600">Price</span> ${(cartItem.item.price * cartItem.quantity).toFixed(2)}
+                                                        <div className="flex items-end justify-between font-bold">
+                                                            <p>Qty: {cartItem.quantity}</p>
+                                                             <p>${(cartItem.item.price * cartItem.quantity).toFixed(2)}</p>
+                                                        </div>
                                                     </div>
-                                                    <a role="button" onClick={() => removeItem(cartItem.item, cartItem.quantity)}>
+                                                    <a role="button" onClick={() => removeItem(cartItem.item.id)}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none"
                                                             viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -135,10 +139,10 @@ function Checkout() {
                                 Subtotal<span className="ml-2">${getTotalAmount().toFixed(2)}</span></div>
                             <div
                                 className="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                                Shipping Tax<span className="ml-2">$10.00</span></div>
+                                Shipping Tax<span className="ml-2">${cart.length?'10.00':'0.00'}</span></div>
                             <div
                                 className="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                                Total<span className="ml-2">${(getTotalAmount() + 10).toFixed(2)}</span></div>
+                                Total<span className="ml-2">${cart.length?(getTotalAmount() + 10).toFixed(2):'0.00'}</span></div>
                         </div>
                     </div>
                 </div>
