@@ -10,12 +10,13 @@ export default function Modal() {
 
     const { modalCall, setModalCall, cart, setCart } = useContext(globalContext);
 
-    function removeItem( id ) {
+    function removeItem(id) {
         const newCart = cart.filter(itemKey => itemKey.item.id !== id)
         setCart(newCart)
+        localStorage.setItem("cartItem", JSON.stringify(newCart));
     }
 
-    function changeHandler( e, id ) {
+    function changeHandler(e, id) {
         const value = e.target.value;
         let cartItems = [];
         for (const itemKey of cart) {
@@ -25,6 +26,7 @@ export default function Modal() {
             cartItems.push(itemKey);
         }
         setCart(cartItems)
+        localStorage.setItem("cartItem", JSON.stringify(cartItems));
     }
 
     function getTotalAmount() {
@@ -33,6 +35,11 @@ export default function Modal() {
             total += (itemKey.item.price * itemKey.quantity);
         }
         return total;
+    }
+
+    function flushCart() {
+        setCart([]);
+        localStorage.setItem("cartItem", JSON.stringify([]));
     }
 
     return (
@@ -61,10 +68,11 @@ export default function Modal() {
                             leaveFrom="translate-x-0"
                             leaveTo="translate-x-full"
                         >
+
                             <div className="w-screen max-w-md">
                                 <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
                                     <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
-                                        <div className="flex items-start justify-between">
+                                        <div className="mt-4 flex items-start justify-between">
                                             <Dialog.Title className="text-lg font-medium text-gray-900">Shopping cart</Dialog.Title>
                                             <div className="ml-3 h-7 flex items-center">
                                                 <button
@@ -123,13 +131,24 @@ export default function Modal() {
                                         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                         <div className="mt-6">
 
-                                            <Link to="/checkout">
-                                                <a onClick={() => setModalCall(false)} className="flex justify-center items-center px-6 py-3 border border-transparent 
+
+                                            <div className="flex justify-between items-center">
+
+                                                <Link to="/checkout">
+                                                    <a onClick={() => setModalCall(false)} className="px-6 py-3 border border-transparent 
                                                     rounded-md shadow-sm text-base font-medium text-white bg-indigo-600
                                                      hover:bg-indigo-700">
-                                                    Checkout
+                                                        Checkout
+                                                    </a>
+
+                                                </Link>
+                                                <a onClick={() => flushCart()} className="px-6 py-3 border border-transparent 
+                                                        rounded-md shadow-sm text-base font-medium text-white bg-red-500
+                                                        hover:bg-red-600">
+                                                    Clear Cart
                                                 </a>
-                                            </Link>
+                                            </div>
+
 
 
                                         </div>

@@ -1,5 +1,4 @@
 import Nav from './Components/Nav';
-import './App.css';
 import GlobalContext from './GlobalContext/GlobalContext';
 import Checkout from './Components/Checkout';
 import Cards from './Components/Cards';
@@ -9,6 +8,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import EmptyCart from './Components/EmptyCart';
 
 
 function App() {
@@ -26,10 +26,12 @@ function App() {
           <Route exact path="/confirmation" >
             <Confirmation />
           </Route>
+          <Route exact path="/empty-cart" >
+            <EmptyCart />
+          </Route>
         </Switch>
       </GlobalContext>
     </Router>
-
   );
 }
 

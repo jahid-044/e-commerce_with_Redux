@@ -21,7 +21,9 @@ export default function Cards() {
     }, []);
 
     const addItems = (item) => {
-        setCart([...cart, { item, quantity: 1 }]);
+        const newCart = [...cart, { item, quantity: 1 }]
+        setCart(newCart);
+        localStorage.setItem("cartItem", JSON.stringify(newCart));
     }
 
     function increaseQty(id) {
@@ -33,6 +35,7 @@ export default function Cards() {
             cartItems.push(itemKey);
         }
         setCart(cartItems)
+        localStorage.setItem("cartItem", JSON.stringify(cartItems));
     }
 
     function decreaseQty(id) {
@@ -47,6 +50,7 @@ export default function Cards() {
 
         }
         setCart(cartItems)
+        localStorage.setItem("cartItem", JSON.stringify(cartItems));
     }
 
     function find(id) {
@@ -74,7 +78,7 @@ export default function Cards() {
                                     <img src={item.image} alt="Product Item Image" className="h-full w-full object-fill rounded-2xl" />
                                 </div>
 
-                                <div className="font-bold mt-4">
+                                <div className="font-bold mt-4 line-clamp-1">
                                     {item.title}
                                 </div>
 
@@ -85,11 +89,11 @@ export default function Cards() {
                                 {
                                     find(item.id) ? (
                                         <div className="w-full flex justify-center py-2 mt-auto bg-gray-200 text-white rounded shadow focus:ring-2">
-                                            <button id="btn" onClick={() => decreaseQty(item.id)} className="w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
+                                            <button id="btn" onClick={() => decreaseQty(item.id)} className="w-6 h-6 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
                                                 -
                                             </button>
                                             <p className=" text-black">{itemQuantity(item.id)}</p>
-                                            <button id="btn" onClick={() => increaseQty(item.id)} className="w-8 h-8 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
+                                            <button id="btn" onClick={() => increaseQty(item.id)} className="w-6 h-6 mx-5 bg-green-700 text-white rounded shadow focus:ring-2">
                                                 +
                                             </button>
                                         </div>
