@@ -1,33 +1,29 @@
-import { Fragment, useContext } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
-import { globalContext } from '../GlobalContext/GlobalContext'
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { changeQuantity, removeItem, flushCart } from '../Action/shopActions';
 
 
 
-export default function Modal() {
+export default function Modal({ modalCall, setModalCall }) {
+    const cart = useSelector(state => state.cart)
+    //   const modalCall = useSelector(state => state.modalCall)
+    const dispatch = useDispatch()
 
-    const { modalCall, setModalCall, cart, setCart } = useContext(globalContext);
-
-    function removeItem(id) {
-        const newCart = cart.filter(itemKey => itemKey.item.id !== id)
-        setCart(newCart)
-        localStorage.setItem("cartItem", JSON.stringify(newCart));
+    function remove(id) {
+        dispatch(removeItem(id))
     }
 
-    function changeHandler(e, id) {
+    function onChangeHandler(e, id) {
         const value = e.target.value;
-        let cartItems = [];
-        for (const itemKey of cart) {
-            if (itemKey.item.id === id) {
-                itemKey.quantity = parseInt(value);
-            }
-            cartItems.push(itemKey);
-        }
-        setCart(cartItems)
-        localStorage.setItem("cartItem", JSON.stringify(cartItems));
+        dispatch(changeQuantity(id, value))
     }
+
+    // function howModal(bool) {
+    //     dispatch(setModal(bool))
+    // }
 
     function getTotalAmount() {
         let total = 0.0;
@@ -37,11 +33,10 @@ export default function Modal() {
         return total;
     }
 
-    function flushCart() {
-        setCart([]);
-        localStorage.setItem("cartItem", JSON.stringify([]));
+    function cleanCart() {
+        dispatch(flushCart())
     }
-
+    console.log("In modal", modalCall);
     return (
         <Transition.Root show={modalCall} as={Fragment}>
             <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setModalCall}>
@@ -108,9 +103,9 @@ export default function Modal() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex-1 flex items-end justify-between text-sm">
-                                                                    <input className=" text-center ring-2 ring-black rounded w-12 h-6" type="number" name="quantity" value={product.quantity} min="1" onChange={(event) => changeHandler(event, product.item.id)} />
+                                                                    <input className=" text-center ring-2 ring-black rounded w-12 h-6" type="number" name="quantity" value={product.quantity} min="1" onChange={(event) => onChangeHandler(event, product.item.id)} />
                                                                     <div className="flex">
-                                                                        <button onClick={() => removeItem(product.item.id)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                                                        <button onClick={() => remove(product.item.id)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                                                             Remove
                                                                         </button>
                                                                     </div>
@@ -142,7 +137,7 @@ export default function Modal() {
                                                     </a>
 
                                                 </Link>
-                                                <a onClick={() => flushCart()} className="px-6 py-3 border border-transparent 
+                                                <a onClick={() => cleanCart()} className="px-6 py-3 border border-transparent 
                                                         rounded-md shadow-sm text-base font-medium text-white bg-red-500
                                                         hover:bg-red-600">
                                                     Clear Cart

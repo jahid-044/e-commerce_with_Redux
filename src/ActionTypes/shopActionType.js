@@ -1,0 +1,6 @@
+export const shopActions = {
+    ADD_ITEM: "ADD_ITEM",
+    CHANGE_QUANTITY: "CHANGE_QUANTITY",
+    REMOVE_ITEM: "REMOVE_ITEM",
+    FLUSH_CART: "FLUSH_CART",
+}

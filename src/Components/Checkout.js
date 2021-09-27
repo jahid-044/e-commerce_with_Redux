@@ -1,22 +1,20 @@
-import { useContext } from "react";
 import { withRouter, useHistory, Redirect } from "react-router-dom";
-import { globalContext } from "../GlobalContext/GlobalContext";
+import { flushCart, removeItem } from "../Action/shopActions";
+import { useSelector, useDispatch } from "react-redux";
 
 
 function Checkout() {
-    const { cart, setCart } = useContext(globalContext);
+    const cart = useSelector(state => state.cart)
+    const dispatch = useDispatch()
     let history = useHistory();
 
-    function removeItem(id) {
-        const newCart = cart.filter(itemKey => itemKey.item.id !== id)
-        setCart(newCart)
-        localStorage.setItem("cartItem", JSON.stringify(newCart));
+    function remove(id) {
+        dispatch(removeItem(id))
     }
 
     function submitForm(event) {
         event.preventDefault();
-        setCart([]);
-        localStorage.setItem("cartItem", JSON.stringify([]));
+        dispatch(flushCart())
         history.push("/confirmation")
     }
 
@@ -121,7 +119,7 @@ function Checkout() {
                                                                 <p>${(cartItem.item.price * cartItem.quantity).toFixed(2)}</p>
                                                             </div>
                                                         </div>
-                                                        <a role="button" onClick={() => removeItem(cartItem.item.id)}>
+                                                        <a role="button" onClick={() => remove(cartItem.item.id)}>
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none"
                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

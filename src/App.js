@@ -1,5 +1,4 @@
 import Nav from './Components/Nav';
-import GlobalContext from './GlobalContext/GlobalContext';
 import Checkout from './Components/Checkout';
 import Cards from './Components/Cards';
 import Confirmation from './Components/Confirmation';
@@ -9,12 +8,14 @@ import {
   Route,
 } from "react-router-dom";
 import EmptyCart from './Components/EmptyCart';
+import { Provider } from 'react-redux'
+import store from './Store/ShoppingStore';
 
 
 function App() {
   return (
     <Router>
-      <GlobalContext>
+      <Provider store={store}>
         <Nav />
         <Switch>
           <Route exact path="/">
@@ -30,7 +31,7 @@ function App() {
             <EmptyCart />
           </Route>
         </Switch>
-      </GlobalContext>
+      </Provider>
     </Router>
   );
 }
