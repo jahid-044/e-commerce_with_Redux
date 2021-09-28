@@ -1,27 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { fetchProduct } from "../Action/fetchAction";
 import { changeQuantity } from "../Action/shopActions";
 import { addItem } from "../Action/shopActions";
 
 export default function Cards() {
-    const [productList, setProductList] = useState([]);
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.static.cart)
     const dispatch = useDispatch()
+    dispatch(fetchProduct)
 
-    useEffect(() => {
-
-        if (productList.length === 0 && !localStorage.getItem("productList")) {
-            fetch('https://fakestoreapi.com/products')
-                .then(data => data.json())
-                .then(data => {
-                    localStorage.setItem("productList", JSON.stringify(data));
-                    setProductList(data);
-                })
-        }
-        else {
-            setProductList(JSON.parse(localStorage.getItem("productList")));
-        }
-    }, []);
+    const productList = useSelector(state => state.dynamic.productList)
 
     function add(item) {
         dispatch(addItem({ item, quantity: 1 }))

@@ -18,7 +18,7 @@ function classNames(...classes) {
 
 export default function Nav() {
   const [modalCall, setModalCall] = useState(false)
-  const cart = useSelector(state => state.cart)
+  const cart = useSelector(state => state.static.cart)
 
   function getTotalQuantity() {
     let total = 0;

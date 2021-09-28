@@ -1,0 +1,1 @@
+export const fetchAction = { FETCH_PRODUCT: "FETCH_PRODUCT" }

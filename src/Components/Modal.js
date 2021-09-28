@@ -8,7 +8,7 @@ import { changeQuantity, removeItem, flushCart } from '../Action/shopActions';
 
 
 export default function Modal({ modalCall, setModalCall }) {
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.static.cart)
     //   const modalCall = useSelector(state => state.modalCall)
     const dispatch = useDispatch()
 
@@ -39,7 +39,7 @@ export default function Modal({ modalCall, setModalCall }) {
     console.log("In modal", modalCall);
     return (
         <Transition.Root show={modalCall} as={Fragment}>
-            <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setModalCall}>
+            <Dialog as="div" className="fixed inset-0 overflow-hidden z-20" onClose={setModalCall}>
                 <div className="absolute inset-0 overflow-hidden">
                     <Transition.Child
                         as={Fragment}

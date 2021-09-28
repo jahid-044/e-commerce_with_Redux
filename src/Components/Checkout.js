@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 
 function Checkout() {
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.static.cart)
     const dispatch = useDispatch()
     let history = useHistory();
 
