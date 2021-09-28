@@ -1,7 +1,7 @@
 import { shopActions } from "../ActionTypes/shopActionType"
 
 const initialState = {
-    cart: localStorage.getItem("cartItem") !== null ? JSON.parse(localStorage.getItem("cartItem")) : [],
+    cart: [],
 }
 
 const shopReducer = (state = initialState, action) => {
