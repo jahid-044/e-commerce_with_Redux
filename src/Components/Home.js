@@ -12,6 +12,8 @@ import EmptyCart from './EmptyCart';
 import { Provider } from 'react-redux'
 import { store, persistor } from '../Store/ShoppingStore';
 import { PersistGate } from 'redux-persist/integration/react';
+import AboutUs from './AboutUs';
+import ContactUs from './ContactUs';
 
 
 
@@ -24,6 +26,12 @@ function Home() {
                     <Switch>
                         <Route exact path="/">
                             <Cards />
+                        </Route>
+                        <Route exact path="/about" >
+                            <AboutUs />
+                        </Route>
+                        <Route exact path="/contact" >
+                            <ContactUs />
                         </Route>
                         <Route exact path="/checkout" >
                             <Checkout />

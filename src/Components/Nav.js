@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux'
 
 const navigation = [
   { name: 'Home', path: '/', current: false },
-  { name: 'About', path: '#', current: false },
-  { name: 'Contacts', path: '#', current: false },
+  { name: 'About', path: '/about', current: false },
+  { name: 'Contacts', path: '/contact', current: false },
 ]
 
 function classNames(...classes) {
