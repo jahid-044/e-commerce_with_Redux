@@ -9,7 +9,6 @@ import { changeQuantity, removeItem, flushCart } from '../Action/shopActions';
 
 export default function Modal({ modalCall, setModalCall }) {
     const cart = useSelector(state => state.static.cart)
-    //   const modalCall = useSelector(state => state.modalCall)
     const dispatch = useDispatch()
 
     function remove(id) {
@@ -20,10 +19,6 @@ export default function Modal({ modalCall, setModalCall }) {
         const value = e.target.value;
         dispatch(changeQuantity(id, value))
     }
-
-    // function howModal(bool) {
-    //     dispatch(setModal(bool))
-    // }
 
     function getTotalAmount() {
         let total = 0.0;
@@ -36,7 +31,7 @@ export default function Modal({ modalCall, setModalCall }) {
     function cleanCart() {
         dispatch(flushCart())
     }
-    console.log("In modal", modalCall);
+
     return (
         <Transition.Root show={modalCall} as={Fragment}>
             <Dialog as="div" className="fixed inset-0 overflow-hidden z-20" onClose={setModalCall}>

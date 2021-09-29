@@ -100,7 +100,7 @@ export default function Nav() {
                 </div>
               </div>
             </div>
-            {console.log(modalCall)}
+
             <Modal modalCall={modalCall} setModalCall={setModalCall} />
 
             <Disclosure.Panel className="sm:hidden">

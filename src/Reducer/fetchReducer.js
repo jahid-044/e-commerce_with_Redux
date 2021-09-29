@@ -1,12 +1,15 @@
-import { fetchAction } from "../ActionTypes/fetchActionType"
+import { FETCH_PRODUCT } from "../ActionTypes/fetchActionType"
 const initialState = {
-    productList: []
+    productList: [],
+    fetchDone: false
 }
 
 const fetchReducer = (state = initialState, action) => {
     switch (action.type) {
-        case fetchAction.FETCH_PRODUCT:
+        case FETCH_PRODUCT:
+            state.fetchDone = true;
             return {
+                ...state,
                 productList: action.payload
             }
         default:

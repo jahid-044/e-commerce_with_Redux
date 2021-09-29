@@ -1,14 +1,19 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProduct } from "../Action/fetchAction";
 import { changeQuantity } from "../Action/shopActions";
 import { addItem } from "../Action/shopActions";
 
 export default function Cards() {
-    const cart = useSelector(state => state.static.cart)
-    const dispatch = useDispatch()
-    dispatch(fetchProduct)
+    const cart = useSelector(state => state.static.cart);
+    const productList = useSelector(state => state.dynamic.productList);
+    const fetched = useSelector(state => state.dynamic.fetchDone);
 
-    const productList = useSelector(state => state.dynamic.productList)
+    const dispatch = useDispatch()
+
+    if (!fetched) {
+        dispatch(fetchProduct)
+    }
 
     function add(item) {
         dispatch(addItem({ item, quantity: 1 }))
