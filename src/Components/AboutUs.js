@@ -10,8 +10,8 @@ export default function AboutUs() {
                 DSI-e.com is a premium provider of supplements around the world. It preserves the reputation of providing services to mass people.
                 We assure you that we make difference in our every step from hand to machine. We make similarity in our difference.
             </h1>
-            <Link to="/">
-                <button className="bg-green-600 hover:bg-green-700 px-6 py-3 border border-transparent rounded-md shadow-sm text-white text-base font-medium mt-8">Go to shop</button>
+            <Link to="/" className="bg-green-600 hover:bg-green-700 px-6 py-3 border border-transparent rounded-md shadow-sm text-white text-base font-medium mt-8">
+                Go to shop
             </Link>
         </div>
     )

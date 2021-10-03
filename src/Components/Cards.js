@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProduct } from "../Action/fetchAction";
 import { changeQuantity } from "../Action/shopActions";

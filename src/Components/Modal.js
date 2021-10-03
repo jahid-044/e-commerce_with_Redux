@@ -124,13 +124,10 @@ export default function Modal({ modalCall, setModalCall }) {
 
                                             <div className="flex justify-between items-center">
 
-                                                <Link to="/checkout">
-                                                    <a onClick={() => setModalCall(false)} className="px-6 py-3 border border-transparent 
+                                                <Link to="/checkout" onClick={() => setModalCall(false)} className="px-6 py-3 border border-transparent 
                                                     rounded-md shadow-sm text-base font-medium text-white bg-indigo-600
                                                      hover:bg-indigo-700">
-                                                        Checkout
-                                                    </a>
-
+                                                    Checkout
                                                 </Link>
                                                 <a onClick={() => cleanCart()} className="px-6 py-3 border border-transparent 
                                                         rounded-md shadow-sm text-base font-medium text-white bg-red-500
@@ -146,14 +143,9 @@ export default function Modal({ modalCall, setModalCall }) {
                                         <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
                                             <p>
                                                 or{' '}
-                                                <Link to="/">
-                                                    <button
-                                                        type="button"
-                                                        className="text-indigo-600 font-medium hover:text-indigo-500"
-                                                        onClick={() => setModalCall(false)}
-                                                    >
-                                                        Continue Shopping<span aria-hidden="true"> &rarr;</span>
-                                                    </button>
+                                                <Link to="/" className="text-indigo-600 font-medium hover:text-indigo-500"
+                                                    onClick={() => setModalCall(false)}>
+                                                    Continue Shopping<span aria-hidden="true"> &rarr;</span>
                                                 </Link>
                                             </p>
                                         </div>
