@@ -102,18 +102,17 @@ function Checkout() {
                                 <h2 className="text-xl font-bold">Order Summary
                                 </h2>
                                 <div className="mt-8">
-                                    <div className="flex flex-col space-y-4">
+                                    <ul className="flex flex-col space-y-4 overflow-y-scroll h-80">
                                         {
                                             cart.map((cartItem, key) => {
                                                 return (
-
-                                                    <div className="grid grid-cols-7 space-x-2">
+                                                    <li className="grid grid-cols-7 space-x-2">
                                                         <div className="col-span-2">
                                                             <img src={cartItem.item.image} alt="Cart Item Image"
                                                                 className="h-32 object-fill" />
                                                         </div>
                                                         <div className="col-span-4">
-                                                            <h2 className="text-xl font-bold">{cartItem.item.title}</h2>
+                                                            <h2 className="text-xl font-bold line-clamp-2">{cartItem.item.title}</h2>
                                                             <div className="flex items-end justify-between font-bold">
                                                                 <p>Qty: {cartItem.quantity}</p>
                                                                 <p>${(cartItem.item.price * cartItem.quantity).toFixed(2)}</p>
@@ -126,13 +125,13 @@ function Checkout() {
                                                                     d="M6 18L18 6M6 6l12 12" />
                                                             </svg>
                                                         </a>
-                                                    </div>
+                                                    </li>
 
 
                                                 )
                                             })
                                         }
-                                    </div>
+                                    </ul>
                                 </div>
 
                                 <div
